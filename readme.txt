@@ -15,7 +15,7 @@ Adds a table of contents to your pages based on h3 and h4 tags. Useful for docum
 Adds a table of contents to your pages based on h3 and h4 tags. Useful for documention-centric sites.
 
 == Installation ==
-1. Upload "test-plugin.php" to the "/wp-content/plugins/" directory.
+1. Upload "/table-of-contents/" to the "/wp-content/plugins/" directory.
 1. Activate the plugin through the "Plugins" menu in WordPress.
 
 == Changelog ==
