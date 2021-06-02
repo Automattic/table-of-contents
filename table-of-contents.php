@@ -32,7 +32,10 @@ if ( ! class_exists( 'Table_Of_Contents' ) ) :
 		 * @return void
 		 */
 		public static function load_filters() {
-			if ( is_page() ) {
+
+			$show_toc = apply_filters( 'toc_display', is_page() );
+
+			if ( $show_toc ) {
 				add_filter( 'the_content', array( __CLASS__, 'add_overview_h3' ) );
 				add_filter( 'the_content', array( __CLASS__, 'add_toc' ) );
 			}
