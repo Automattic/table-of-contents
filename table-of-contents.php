@@ -47,17 +47,18 @@ if ( ! class_exists( 'Table_Of_Contents' ) ) :
 		 */
 		public static function add_toc( $content = '' ) {
 			$toc   = '';
-			$h3s   = self::get_tags( 'h3', $content );
-			$h4s   = self::get_tags( 'h4', $content );
-			$items = $h3s + $h4s;
+
+			$tags_to_show = apply_filters( 'toc_tags_for_toc', [ 'h3' ] );
+
+			$headings   = self::get_tags( $tags_to_show, $content );
 
 			$content = self::add_ids_and_jumpto_links( 'h3', $content );
 			$content = self::add_ids_and_jumpto_links( 'h4', $content );
 
-			if ( $items ) {
+			if ( $headings ) {
 				$toc .= '<div class="vip-lobby-toc">';
 				$toc .= '<h3>Contents</h3><ul class="items">';
-				foreach ( $items as $item ) {
+				foreach ( $headings as $item ) {
 					$toc .= '<li><a href="#' . sanitize_title_with_dashes( $item[2] ) . '">' . $item[2] . '</a></li>';
 				}
 				$toc .= '</ul>';
@@ -126,7 +127,14 @@ if ( ! class_exists( 'Table_Of_Contents' ) ) :
 			if ( empty( $content ) ) {
 				$content = get_the_content();
 			}
-			preg_match_all( "/(<{$tag}>)(.*)(<\/{$tag}>)/", $content, $matches, PREG_SET_ORDER );
+			if ( is_string( $tag ) ) {
+				$tags = [ tag_escape( $tag ) ];
+			} else {
+				$tags = array_map( 'tag_escape', $tag );
+			}
+			$tags = implode( '|', $tags );
+
+			preg_match_all( "/(<(?:{$tags})>)(.*)(<\/(?:{$tags})>)/", $content, $matches, PREG_SET_ORDER );
 			return $matches;
 		}
 	}
