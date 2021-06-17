@@ -94,7 +94,7 @@ if ( ! class_exists( 'Table_Of_Contents' ) ) :
 			$items = self::get_tags( $tag, $content );
 			$first = true;
 
-			$matches = array()
+			$matches = array();
 			$replacements = array();
 
 			foreach ( $items as $item ) {
