@@ -1,4 +1,4 @@
-<?php //phpcs:ignore
+<?php
 /**
  * Plugin Name: Table of Contents
  * Description: Adds a table of contents to your pages based on h3 and h4 tags. Useful for documention-centric sites.
@@ -93,6 +93,9 @@ if ( ! class_exists( 'Table_Of_Contents' ) ) :
 		private static function add_ids_and_jumpto_links( $tag, $content ) {
 			$items = self::get_tags( $tag, $content );
 			$first = true;
+
+			$matches = array();
+			$replacements = array();
 
 			foreach ( $items as $item ) {
 				$replacement = '';
